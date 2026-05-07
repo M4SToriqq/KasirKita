@@ -1,0 +1,34 @@
+# Robots.txt for KasirKita POS System
+
+# Allow all search engines
+User-agent: *
+Allow: /
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /owner/
+Disallow: /inventory/
+Disallow: /kasir/
+Disallow: /profile/
+
+# Disallow authentication pages
+Disallow: /login
+Disallow: /register
+Disallow: /password/
+Disallow: /verify-email
+
+# Disallow API endpoints
+Disallow: /api/
+
+# Allow public assets
+Allow: /icons/
+Allow: /build/
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.svg$
+Allow: /*.png$
+Allow: /*.jpg$
+
+# Sitemap location
+Sitemap: {{ url('/sitemap.xml') }}
