@@ -1,13 +1,13 @@
 <script setup>
-import SidebarLayout from '@/Layouts/SidebarLayout.vue';
-import { useForm } from '@inertiajs/vue3';
-import { ClipboardDocumentListIcon } from '@heroicons/vue/24/outline';
+    import SidebarLayout from '@/Layouts/SidebarLayout.vue';
+    import { useForm } from '@inertiajs/vue3';
+    import { ClipboardDocumentListIcon, BanknotesIcon, DevicePhoneMobileIcon } from '@heroicons/vue/24/outline';
 
-const props = defineProps({ transactions: Array, totalRevenue: Number, totalProfit: Number, filters: Object });
-const form = useForm({ date_from: props.filters.date_from, date_to: props.filters.date_to });
-const filter = () => form.get(route('owner.sales-report'));
-const fmt = (val) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(val);
-const fmtDate = (d) => new Date(d).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    const props = defineProps({ transactions: Array, totalRevenue: Number, totalProfit: Number, filters: Object });
+    const form = useForm({ date_from: props.filters.date_from, date_to: props.filters.date_to });
+    const filter = () => form.get(route('owner.sales-report'));
+    const fmt = (val) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(val);
+    const fmtDate = (d) => new Date(d).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 </script>
 
 <template>
@@ -60,7 +60,9 @@ const fmtDate = (d) => new Date(d).toLocaleDateString('id-ID', { day: '2-digit',
                         <td class="px-4 py-3">
                             <span :class="t.payment_method === 'CASH' ? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200' : 'bg-blue-50 text-blue-700 ring-1 ring-blue-200'"
                                 class="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold">
-                                {{ t.payment_method === 'CASH' ? '💵' : '📱' }} {{ t.payment_method }}
+                                <BanknotesIcon v-if="t.payment_method === 'CASH'" class="h-3.5 w-3.5" />
+                                <DevicePhoneMobileIcon v-else class="h-3.5 w-3.5" />
+                                {{ t.payment_method === 'CASH' ? 'Tunai' : 'Non Tunai' }}
                             </span>
                         </td>
                         <td class="px-4 py-3 text-gray-500">{{ fmtDate(t.created_at) }}</td>

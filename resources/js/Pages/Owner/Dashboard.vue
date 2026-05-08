@@ -2,34 +2,53 @@
 import SidebarLayout from '@/Layouts/SidebarLayout.vue';
 import { Link } from '@inertiajs/vue3';
 import { ref, onMounted, onUnmounted } from 'vue';
-import { CurrencyDollarIcon, ClipboardDocumentListIcon, ArrowTrendingUpIcon, CubeIcon, StarIcon, ClockIcon, ChevronRightIcon, ArrowDownTrayIcon } from '@heroicons/vue/24/outline';
+import { CurrencyDollarIcon, ClipboardDocumentListIcon, ArrowTrendingUpIcon, CubeIcon, StarIcon, ClockIcon, ChevronRightIcon, ArrowDownTrayIcon, BanknotesIcon, DevicePhoneMobileIcon } from '@heroicons/vue/24/outline';
 
 const props = defineProps({
     summary: Object,
     salesByPayment: Array,
-    todaySales: Number,
-    todayTransactions: Number,
-    lowStockProducts: Number,
+    todaySales: [Number, String],
+    todayTransactions: [Number, String],
+    lowStockProducts: [Number, String],
     recentTransactions: Array,
     topProducts: Array,
     filters: Object,
 });
 
+const toNum = (v) => Number(v) || 0
 const realtimeData = ref({
-    summary: props.summary,
-    todaySales: props.todaySales,
-    todayTransactions: props.todayTransactions,
-    lowStockProducts: props.lowStockProducts,
+    summary: {
+        totalSales:        toNum(props.summary?.totalSales),
+        totalTransactions: toNum(props.summary?.totalTransactions),
+        totalProfit:       toNum(props.summary?.totalProfit),
+        totalItemsSold:    toNum(props.summary?.totalItemsSold),
+    },
+    todaySales:         toNum(props.todaySales),
+    todayTransactions:  toNum(props.todayTransactions),
+    lowStockProducts:   toNum(props.lowStockProducts),
     recentTransactions: props.recentTransactions,
 });
+
 
 let pollingInterval = null;
 
 const fetchRealtimeData = async () => {
     try {
-        const res = await fetch(route('owner.realtime-data', { date_from: props.filters.dateFrom, date_to: props.filters.dateTo }));
+        const res  = await fetch(route('owner.realtime-data', { date_from: props.filters.dateFrom, date_to: props.filters.dateTo }));
         const data = await res.json();
-        realtimeData.value = data;
+
+        realtimeData.value = {
+            ...data,
+            summary: {
+                totalSales:        toNum(data.summary?.totalSales),
+                totalTransactions: toNum(data.summary?.totalTransactions),
+                totalProfit:       toNum(data.summary?.totalProfit),
+                totalItemsSold:    toNum(data.summary?.totalItemsSold),
+            },
+            todaySales:        toNum(data.todaySales),
+            todayTransactions: toNum(data.todayTransactions),
+            lowStockProducts:  toNum(data.lowStockProducts),
+        };
     } catch (e) {
         console.error('Realtime fetch error:', e);
     }
@@ -52,15 +71,14 @@ const exportSales = () => {
 
 <template>
     <SidebarLayout>
-        <template #title>
-            <div class="flex items-center justify-between">
-                <span>Dashboard Owner</span>
-                <button @click="exportSales" class="flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700">
-                    <ArrowDownTrayIcon class="h-4 w-4" />
-                    Export CSV
-                </button>
-            </div>
-        </template>
+        <template #title>Dashboard Owner</template>
+
+        <div class="flex justify-end mb-5">
+            <button @click="exportSales" class="flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700">
+                <ArrowDownTrayIcon class="h-4 w-4" />
+                Export Excel
+            </button>
+        </div>
 
         <!-- Stats Cards -->
         <div class="grid grid-cols-2 gap-4 lg:grid-cols-4 mb-5">
@@ -113,8 +131,9 @@ const exportSales = () => {
                 <div class="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-3">Penjualan per Metode</div>
                 <div v-for="item in salesByPayment" :key="item.payment_method" class="flex items-center justify-between py-1.5 border-b border-gray-50 last:border-0">
                     <span class="text-sm text-gray-600 flex items-center gap-1.5">
-                        <span>{{ item.payment_method === 'CASH' ? '💵' : '📱' }}</span>
-                        {{ item.payment_method }}
+                        <BanknotesIcon v-if="item.payment_method === 'CASH'" class="h-4 w-4 text-emerald-500" />
+                        <DevicePhoneMobileIcon v-else class="h-4 w-4 text-blue-500" />
+                        {{ item.payment_method === 'CASH' ? 'Tunai' : 'Non Tunai' }}
                     </span>
                     <span class="text-sm font-semibold text-gray-800">{{ fmt(item.total) }}</span>
                 </div>
@@ -122,8 +141,8 @@ const exportSales = () => {
             <div :class="realtimeData.lowStockProducts > 0 ? 'border-red-200 bg-red-50' : 'border-gray-200 bg-white'" class="rounded-2xl border p-5 shadow-sm">
                 <div class="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-3">Stok Menipis</div>
                 <div :class="realtimeData.lowStockProducts > 0 ? 'text-red-600' : 'text-gray-900'" class="text-2xl font-bold">{{ realtimeData.lowStockProducts }} produk</div>
-                <Link :href="route('owner.audit-trail')" class="mt-2 inline-flex items-center gap-1 text-xs font-medium text-indigo-600 hover:text-indigo-700">
-                    Lihat detail <ChevronRightIcon class="h-3 w-3" />
+                <Link :href="route('owner.product-report', { low_stock: 1 })" class="mt-2 inline-flex items-center gap-1 text-xs font-medium text-indigo-600 hover:text-indigo-700">
+                    Lihat Produk <ChevronRightIcon class="h-3 w-3" />
                 </Link>
             </div>
         </div>

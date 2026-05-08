@@ -17,8 +17,40 @@ use Illuminate\Support\Facades\Response;
 
 class OwnerController extends Controller
 {
+    public function cashiersCreate(): \Inertia\Response
+    {
+        return inertia('Owner/Cashiers');
+    }
+
+    public function cashiersStore(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', 'unique:users,username'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
+            'phone' => ['nullable', 'string', 'max:255'],
+            'role' => ['required', 'in:kasir,inventory_staff'],
+            'password' => ['required', 'confirmed'],
+            'password_confirmation' => ['required'],
+        ]);
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'username' => $validated['username'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'] ?? null,
+            'role' => $validated['role'],
+            'password' => \Illuminate\Support\Facades\Hash::make($validated['password']),
+            'is_active' => true,
+        ]);
+
+        $roleLabel = $validated['role'] === 'kasir' ? 'kasir' : 'inventory staff';
+        return redirect()->route('owner.cashiers')->with('success', "Akun {$roleLabel} berhasil dibuat.");
+    }
+
     public function dashboard(Request $request)
     {
+
         $dateFrom = $request->input('date_from', now()->startOfMonth()->format('Y-m-d'));
         $dateTo = $request->input('date_to', now()->endOfMonth()->format('Y-m-d'));
 

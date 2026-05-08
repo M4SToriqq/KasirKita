@@ -46,13 +46,19 @@ const inputClass = 'w-full rounded-xl border border-gray-200 bg-gray-50 px-3 py-
     <SidebarLayout>
         <template #title>Manajemen Produk</template>
 
-        <div class="mb-4 flex justify-end">
+        <!-- Section Header -->
+        <div class="mb-6 flex items-center justify-between">
+            <div>
+                <h2 class="text-lg font-semibold text-gray-900">Daftar Produk</h2>
+                <p class="mt-1 text-sm text-gray-500">Kelola semua produk yang dijual di toko Anda</p>
+            </div>
             <button @click="openCreate" class="flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 active:scale-95">
                 <PlusIcon class="h-4 w-4" />
                 Tambah Produk
             </button>
         </div>
 
+        <!-- Products Table -->
         <div class="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
             <table class="w-full text-sm">
                 <thead class="bg-gray-50">
@@ -114,48 +120,48 @@ const inputClass = 'w-full rounded-xl border border-gray-200 bg-gray-50 px-3 py-
         <!-- Create/Edit Modal -->
         <Modal :show="showModal" @close="closeModal">
             <div class="p-6">
-                <h2 class="mb-5 text-base font-semibold text-gray-900">{{ editingProduct ? 'Edit Produk' : 'Tambah Produk' }}</h2>
-                <form @submit.prevent="submit" class="grid grid-cols-2 gap-4">
+                <h2 class="mb-5 text-base font-semibold text-gray-900">{{ editingProduct ? 'Edit Produk' : 'Tambah Produk Baru' }}</h2>
+                <form @submit.prevent="submit" class="grid grid-cols-2 gap-4 space-y-0">
                     <div class="col-span-2">
-                        <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-gray-500">Nama Produk</label>
-                        <input v-model="form.name" type="text" :class="inputClass" required />
+                        <label class="mb-1.5 block text-sm font-medium text-gray-700">Nama Produk</label>
+                        <input v-model="form.name" type="text" :class="inputClass" placeholder="Contoh: Laptop Dell XPS 13" required />
                         <InputError :message="form.errors.name" class="mt-1" />
                     </div>
                     <div>
-                        <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-gray-500">Kategori</label>
-                        <select v-model="form.category_id" :class="inputClass">
+                        <label class="mb-1.5 block text-sm font-medium text-gray-700">Kategori</label>
+                        <select v-model="form.category_id" :class="inputClass" required>
                             <option value="">Pilih Kategori</option>
                             <option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option>
                         </select>
                         <InputError :message="form.errors.category_id" class="mt-1" />
                     </div>
                     <div>
-                        <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-gray-500">SKU</label>
-                        <input v-model="form.sku" type="text" :class="inputClass" required />
+                        <label class="mb-1.5 block text-sm font-medium text-gray-700">SKU / Kode Produk</label>
+                        <input v-model="form.sku" type="text" :class="inputClass" placeholder="Contoh: PROD-001" required />
                         <InputError :message="form.errors.sku" class="mt-1" />
                     </div>
                     <div>
-                        <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-gray-500">Barcode</label>
-                        <input v-model="form.barcode" type="text" :class="inputClass" />
+                        <label class="mb-1.5 block text-sm font-medium text-gray-700">Barcode <span class="text-gray-400">(opsional)</span></label>
+                        <input v-model="form.barcode" type="text" :class="inputClass" placeholder="Scan atau masukkan barcode" />
                     </div>
                     <div>
-                        <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-gray-500">Stok Minimum</label>
-                        <input v-model="form.min_stock" type="number" :class="inputClass" />
+                        <label class="mb-1.5 block text-sm font-medium text-gray-700">Stok Minimum</label>
+                        <input v-model="form.min_stock" type="number" min="0" :class="inputClass" required />
                     </div>
                     <div>
-                        <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-gray-500">Harga Beli</label>
-                        <input v-model="form.purchase_price" type="number" :class="inputClass" />
+                        <label class="mb-1.5 block text-sm font-medium text-gray-700">Harga Beli</label>
+                        <input v-model="form.purchase_price" type="number" min="0" :class="inputClass" required />
                         <InputError :message="form.errors.purchase_price" class="mt-1" />
                     </div>
                     <div>
-                        <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-gray-500">Harga Jual</label>
-                        <input v-model="form.selling_price" type="number" :class="inputClass" />
+                        <label class="mb-1.5 block text-sm font-medium text-gray-700">Harga Jual</label>
+                        <input v-model="form.selling_price" type="number" min="0" :class="inputClass" required />
                         <InputError :message="form.errors.selling_price" class="mt-1" />
                     </div>
                     <div class="col-span-2 flex justify-end gap-2 border-t border-gray-100 pt-4">
                         <button type="button" @click="closeModal" class="rounded-xl border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition">Batal</button>
                         <button type="submit" :disabled="form.processing" class="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700 disabled:opacity-50 transition">
-                            {{ editingProduct ? 'Update' : 'Simpan' }}
+                            {{ editingProduct ? 'Update Produk' : 'Simpan Produk' }}
                         </button>
                     </div>
                 </form>
@@ -165,7 +171,7 @@ const inputClass = 'w-full rounded-xl border border-gray-200 bg-gray-50 px-3 py-
         <!-- Delete Modal -->
         <Modal :show="showDeleteModal" @close="showDeleteModal = false">
             <div class="p-6">
-                <div class="mb-5 flex items-start gap-4">
+                <div class="mb-4 flex items-start gap-4">
                     <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-red-100">
                         <TrashIcon class="h-5 w-5 text-red-600" />
                     </div>
@@ -176,7 +182,7 @@ const inputClass = 'w-full rounded-xl border border-gray-200 bg-gray-50 px-3 py-
                 </div>
                 <div class="flex justify-end gap-2">
                     <button @click="showDeleteModal = false" class="rounded-xl border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 transition">Batal</button>
-                    <button @click="deleteProduct" :disabled="deleteForm.processing" class="rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 disabled:opacity-50 transition">Hapus</button>
+                    <button @click="deleteProduct" :disabled="deleteForm.processing" class="rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 disabled:opacity-50 transition">Hapus Produk</button>
                 </div>
             </div>
         </Modal>

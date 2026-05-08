@@ -14,7 +14,8 @@ import {
     UserIcon,
     ChevronLeftIcon,
     ChevronDownIcon,
-    ArrowRightOnRectangleIcon,
+    UserCircleIcon,
+    ArrowRightStartOnRectangleIcon,
 } from '@heroicons/vue/24/outline';
 
 const page = usePage();
@@ -34,6 +35,7 @@ const ownerMenus = [
             { label: 'Laporan Kasir',     route: 'owner.cashier-report' },
         ]
     },
+    { label: 'Akun Pengguna', route: 'owner.cashiers', icon: UserCircleIcon },
     { label: 'Audit Trail', route: 'owner.audit-trail', icon: MagnifyingGlassIcon },
 ];
 
@@ -174,7 +176,7 @@ function isParentActive(menu) {
                 <!-- Profile -->
                 <div class="relative">
                     <button @click="userMenuOpen = !userMenuOpen" class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-[13px] text-gray-500 transition hover:bg-gray-100 hover:text-gray-800" :class="sidebarOpen ? '' : 'justify-center'">
-                        <ArrowRightOnRectangleIcon class="h-[18px] w-[18px] shrink-0" />
+                        <UserCircleIcon class="h-[18px] w-[18px] shrink-0" />
                         <span v-if="sidebarOpen" class="flex-1 text-left">Akun</span>
                         <ChevronDownIcon v-if="sidebarOpen" class="h-3.5 w-3.5 text-gray-400" />
                     </button>
@@ -191,7 +193,7 @@ function isParentActive(menu) {
                                     <UserIcon class="h-4 w-4 text-gray-400" /> Profil
                                 </Link>
                                 <Link :href="route('logout')" method="post" as="button" @click="userMenuOpen = false" class="flex w-full items-center gap-2 px-4 py-2.5 text-sm text-red-600 transition hover:bg-red-50">
-                                    <ArrowRightOnRectangleIcon class="h-4 w-4" /> Keluar
+                                    <ArrowRightStartOnRectangleIcon class="h-4 w-4" /> Keluar
                                 </Link>
                             </div>
                         </div>

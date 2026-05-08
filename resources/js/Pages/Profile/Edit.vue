@@ -17,21 +17,17 @@
 
 <template>
     <Head title="Profile" />
-
     <SidebarLayout>
         <template #title>Profil Saya</template>
-
-        <div class="mx-auto max-w-3xl space-y-6">
+        <div class="space-y-6">
             <div class="bg-white rounded-2xl border border-gray-200 p-8">
-                <UpdateProfileInformationForm :must-verify-email="mustVerifyEmail" :status="status" class="max-w-xl" />
+                <UpdateProfileInformationForm :must-verify-email="mustVerifyEmail" :status="status" />
             </div>
-
             <div class="bg-white rounded-2xl border border-gray-200 p-8">
-                <UpdatePasswordForm class="max-w-xl" />
+                <UpdatePasswordForm />
             </div>
-
             <div class="bg-white rounded-2xl border border-gray-200 p-8">
-                <DeleteUserForm class="max-w-xl" />
+                <DeleteUserForm />
             </div>
         </div>
     </SidebarLayout>

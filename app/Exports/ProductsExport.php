@@ -102,7 +102,7 @@ class ProductsExport implements FromCollection, WithHeadings, WithMapping, WithS
         ];
     }
 
-    public function map(Product $product): array
+    public function map($product): array
     {
         return [
             $product->sku,

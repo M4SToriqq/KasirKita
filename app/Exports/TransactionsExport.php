@@ -108,7 +108,7 @@ class TransactionsExport implements FromCollection, WithHeadings, WithMapping, W
         ];
     }
 
-    public function map(Transaction $transaction): array
+    public function map($transaction): array
     {
         $details = $transaction->details ?? collect();
 

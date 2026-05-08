@@ -33,9 +33,9 @@ class StockLogSeeder extends Seeder
         $this->createStockLog(13, 'OUT', 20, 150, 130, 8000, 4, Carbon::now()->subDays(3), 'Promo/sample');
 
         // Stock ADJUSTMENT
-        $this->createStockLog(2, 'ADJUSTMENT', -5, 50, 45, 10000, 4, Carbon::now()->subDays(10), 'Koreksi stok opname');
-        $this->createStockLog(8, 'ADJUSTMENT', 10, 70, 80, 3000, 4, Carbon::now()->subDays(10), 'Koreksi stok opname');
-        $this->createStockLog(14, 'ADJUSTMENT', -10, 130, 120, 5000, 4, Carbon::now()->subDays(8), 'Koreksi stok opname');
+        $this->createStockLog(2, 'ADJUSTMENT', -5, 50, 45, 10000, 4, Carbon::now()->subDays(3), 'Koreksi stok opname');
+        $this->createStockLog(8, 'ADJUSTMENT', 10, 70, 80, 3000, 4, Carbon::now()->subDays(3), 'Koreksi stok opname');
+        $this->createStockLog(14, 'ADJUSTMENT', -10, 130, 120, 5000, 4, Carbon::now()->subDays(2), 'Koreksi stok opname');
 
         // Stock VOID - Dari transaksi void
         $this->createStockLog(4, 'VOID', 2, 23, 25, 13000, 2, Carbon::now()->subHours(2), 'Void transaksi INV-' . date('Ymd') . '-004');

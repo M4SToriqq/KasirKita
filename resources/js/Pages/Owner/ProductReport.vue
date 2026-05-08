@@ -1,12 +1,12 @@
 <script setup>
-import SidebarLayout from '@/Layouts/SidebarLayout.vue';
-import { useForm } from '@inertiajs/vue3';
-import { CubeIcon } from '@heroicons/vue/24/outline';
+    import SidebarLayout from '@/Layouts/SidebarLayout.vue';
+    import { useForm } from '@inertiajs/vue3';
+    import { CubeIcon, ExclamationTriangleIcon} from '@heroicons/vue/24/outline';
 
-const props = defineProps({ products: Array, filters: Object });
-const form = useForm({ date_from: props.filters.date_from, date_to: props.filters.date_to });
-const filter = () => form.get(route('owner.product-report'));
-const fmt = (val) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(val);
+    const props = defineProps({ products: Array, filters: Object });
+    const form = useForm({ date_from: props.filters.date_from, date_to: props.filters.date_to });
+    const filter = () => form.get(route('owner.product-report'));
+    const fmt = (val) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(val);
 </script>
 
 <template>
@@ -49,7 +49,7 @@ const fmt = (val) => new Intl.NumberFormat('id-ID', { style: 'currency', currenc
                         </td>
                         <td class="px-4 py-3 text-right">
                             <span :class="p.stock_quantity <= p.min_stock ? 'text-red-600 font-bold' : 'text-gray-700'">{{ p.stock_quantity }}</span>
-                            <span v-if="p.stock_quantity <= p.min_stock" class="ml-1 text-xs text-red-400">⚠</span>
+                            <ExclamationTriangleIcon v-if="p.stock_quantity <= p.min_stock" class="inline h-4 w-4 ml-1 text-red-400" />
                         </td>
                         <td class="px-4 py-3 text-right text-gray-600">{{ p.sold_qty }}</td>
                         <td class="px-4 py-3 text-right font-medium text-gray-800">{{ fmt(p.revenue) }}</td>

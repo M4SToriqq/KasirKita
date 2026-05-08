@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Owner\OwnerController;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Inventory\InventoryController;
 use App\Http\Controllers\Kasir\KasirController;
 use App\Http\Controllers\ProfileController;
@@ -12,8 +13,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Redirect dashboard ke halaman sesuai role
     Route::get('/dashboard', function () {
-        $role = auth()->user()->role;
-        return match($role) {
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login');
+        }
+        return match ($user->role) {
+
             'owner' => redirect()->route('owner.dashboard'),
             'inventory' => redirect()->route('inventory.dashboard'),
             'kasir' => redirect()->route('kasir.pos'),
@@ -24,6 +29,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // ─── Owner ───────────────────────────────────────────────
     Route::prefix('owner')->name('owner.')->middleware('can:owner')->group(function () {
         Route::get('/dashboard', [OwnerController::class, 'dashboard'])->name('dashboard');
+
+        Route::get('/cashiers', [OwnerController::class, 'cashiersCreate'])->name('cashiers');
+        Route::post('/cashiers', [OwnerController::class, 'cashiersStore'])->name('cashiers.store');
+
+
         Route::get('/sales-report', [OwnerController::class, 'salesReport'])->name('sales-report');
         Route::get('/product-report', [OwnerController::class, 'productReport'])->name('product-report');
         Route::get('/cashier-report', [OwnerController::class, 'cashierReport'])->name('cashier-report');
@@ -74,4 +84,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

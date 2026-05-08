@@ -94,7 +94,7 @@
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/username/pos-system.git
+git clone https://github.com/M4SToriqq/pos-system.git
 cd pos-system
 ```
 
@@ -406,10 +406,10 @@ This project is open-sourced software licensed under the [MIT license](https://o
 
 ## 👨‍💻 Developer
 
-Developed with ❤️ by **Your Name**
+Developed with ❤️ by **Toriq Habil Fadhila**
 
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your.email@example.com
+- GitHub: [@yourusername](https://github.com/M4SToriqq)
+- Email: toriqqhabilfadhila21@gmail.com
 
 ---
 

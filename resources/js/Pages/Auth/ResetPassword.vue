@@ -1,21 +1,18 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
 import { Head, useForm } from '@inertiajs/vue3';
+import { EnvelopeIcon, LockClosedIcon, EyeIcon, EyeSlashIcon, KeyIcon } from '@heroicons/vue/24/outline';
+import { ref } from 'vue';
 
 const props = defineProps({
-    email: {
-        type: String,
-        required: true,
-    },
-    token: {
-        type: String,
-        required: true,
-    },
+    email: { type: String, required: true },
+    token: { type: String, required: true },
 });
+
+const showPassword = ref(false);
+const showConfirmPassword = ref(false);
 
 const form = useForm({
     token: props.token,
@@ -32,30 +29,69 @@ const submit = () => {
 </script>
 
 <template>
-    <GuestLayout>
+    <GuestLayout :is-loading="form.processing" loading-message="Mereset Password...">
+
         <Head title="Reset Password" />
 
-        <form @submit.prevent="submit">
+        <!-- Heading -->
+        <div class="mb-6 text-center">
+            <h1 class="text-xl font-semibold text-gray-900">Reset Password</h1>
+            <p class="mt-1 text-sm text-gray-500">Buat password baru untuk akun Anda.</p>
+        </div>
+
+        <form @submit.prevent="submit" class="space-y-5">
+
+            <!-- Email -->
             <div>
-                <InputLabel for="email" value="Email" />
-                <TextInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus autocomplete="username"/>
-                <InputError class="mt-2" :message="form.errors.email" />
+                <label for="email" class="mb-1.5 block text-sm font-medium text-gray-700">Email</label>
+                <div class="relative">
+                    <EnvelopeIcon class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                    <input id="email" v-model="form.email" type="email" required autofocus autocomplete="username"
+                        class="w-full rounded-xl border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-4 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-indigo-400 focus:bg-white focus:ring-2 focus:ring-indigo-100" />
+                </div>
+                <InputError class="mt-1.5" :message="form.errors.email" />
             </div>
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-                <TextInput id="password" type="password" class="mt-1 block w-full" v-model="form.password" required autocomplete="new-password"/>
-                <InputError class="mt-2" :message="form.errors.password" />
+
+            <!-- Password Baru -->
+            <div>
+                <label for="password" class="mb-1.5 block text-sm font-medium text-gray-700">Password Baru</label>
+                <div class="relative">
+                    <LockClosedIcon class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                    <input id="password" v-model="form.password" :type="showPassword ? 'text' : 'password'"
+                        placeholder="••••••••" required autocomplete="new-password"
+                        class="w-full rounded-xl border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-10 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-indigo-400 focus:bg-white focus:ring-2 focus:ring-indigo-100" />
+                    <button type="button" @click="showPassword = !showPassword"
+                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                        <EyeSlashIcon v-if="showPassword" class="h-4 w-4" />
+                        <EyeIcon v-else class="h-4 w-4" />
+                    </button>
+                </div>
+                <InputError class="mt-1.5" :message="form.errors.password" />
             </div>
-            <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password"/>
-                <TextInput id="password_confirmation" type="password" class="mt-1 block w-full" v-model="form.password_confirmation" required autocomplete="new-password"/>
-                <InputError class="mt-2" :message="form.errors.password_confirmation"/>
+
+            <!-- Konfirmasi Password -->
+            <div>
+                <label for="password_confirmation" class="mb-1.5 block text-sm font-medium text-gray-700">Konfirmasi
+                    Password</label>
+                <div class="relative">
+                    <LockClosedIcon class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                    <input id="password_confirmation" v-model="form.password_confirmation"
+                        :type="showConfirmPassword ? 'text' : 'password'" placeholder="••••••••" required
+                        autocomplete="new-password"
+                        class="w-full rounded-xl border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-10 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-indigo-400 focus:bg-white focus:ring-2 focus:ring-indigo-100" />
+                    <button type="button" @click="showConfirmPassword = !showConfirmPassword"
+                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                        <EyeSlashIcon v-if="showConfirmPassword" class="h-4 w-4" />
+                        <EyeIcon v-else class="h-4 w-4" />
+                    </button>
+                </div>
+                <InputError class="mt-1.5" :message="form.errors.password_confirmation" />
             </div>
-            <div class="mt-4 flex items-center justify-end">
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Reset Password
-                </PrimaryButton>
-            </div>
+
+            <PrimaryButton variant="indigo" size="lg" :disabled="form.processing" :block="true">
+                {{ form.processing ? 'Memproses...' : 'Reset Password' }}
+            </PrimaryButton>
+
         </form>
     </GuestLayout>
 </template>

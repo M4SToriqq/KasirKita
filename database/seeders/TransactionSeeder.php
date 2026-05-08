@@ -18,7 +18,7 @@ class TransactionSeeder extends Seeder
             ['product_id' => 7, 'quantity' => 3],
         ]);
 
-        $this->createTransaction('INV-' . date('Ymd') . '-002', 2, 'COMPLETED', 'QRIS', Carbon::now()->subHours(4), [
+        $this->createTransaction('INV-' . date('Ymd') . '-002', 2, 'COMPLETED', 'NON_CASH', Carbon::now()->subHours(4), [
             ['product_id' => 3, 'quantity' => 1],
             ['product_id' => 8, 'quantity' => 2],
             ['product_id' => 13, 'quantity' => 1],
@@ -34,7 +34,7 @@ class TransactionSeeder extends Seeder
             ['product_id' => 10, 'quantity' => 1],
         ], 'Pembatalan oleh pelanggan');
 
-        $this->createTransaction('INV-' . date('Ymd') . '-005', 3, 'COMPLETED', 'DEBIT', Carbon::now()->subHours(1), [
+        $this->createTransaction('INV-' . date('Ymd') . '-005', 3, 'COMPLETED', 'NON_CASH', Carbon::now()->subHours(1), [
             ['product_id' => 5, 'quantity' => 1],
             ['product_id' => 11, 'quantity' => 1],
             ['product_id' => 19, 'quantity' => 4],
@@ -42,57 +42,57 @@ class TransactionSeeder extends Seeder
 
         // Transaksi kemarin
         $yesterday = Carbon::yesterday();
-        $this->createTransaction('INV-' . $yesterday->format('Ymd') . '-001', 2, 'COMPLETED', 'CASH', $yesterday->setTime(9, 30), [
+        $this->createTransaction('INV-' . $yesterday->format('Ymd') . '-001', 2, 'COMPLETED', 'CASH', $yesterday->copy()->setTime(9, 30), [
             ['product_id' => 6, 'quantity' => 2],
             ['product_id' => 12, 'quantity' => 2],
         ]);
 
-        $this->createTransaction('INV-' . $yesterday->format('Ymd') . '-002', 3, 'COMPLETED', 'QRIS', $yesterday->setTime(11, 15), [
+        $this->createTransaction('INV-' . $yesterday->format('Ymd') . '-002', 3, 'COMPLETED', 'NON_CASH', $yesterday->copy()->setTime(11, 15), [
             ['product_id' => 1, 'quantity' => 3],
             ['product_id' => 7, 'quantity' => 4],
             ['product_id' => 14, 'quantity' => 2],
         ]);
 
-        $this->createTransaction('INV-' . $yesterday->format('Ymd') . '-003', 2, 'COMPLETED', 'CASH', $yesterday->setTime(13, 45), [
+        $this->createTransaction('INV-' . $yesterday->format('Ymd') . '-003', 2, 'COMPLETED', 'CASH', $yesterday->copy()->setTime(13, 45), [
             ['product_id' => 15, 'quantity' => 5],
             ['product_id' => 16, 'quantity' => 3],
         ]);
 
-        $this->createTransaction('INV-' . $yesterday->format('Ymd') . '-004', 3, 'COMPLETED', 'DEBIT', $yesterday->setTime(15, 20), [
+        $this->createTransaction('INV-' . $yesterday->format('Ymd') . '-004', 3, 'COMPLETED', 'NON_CASH', $yesterday->copy()->setTime(15, 20), [
             ['product_id' => 21, 'quantity' => 1],
             ['product_id' => 25, 'quantity' => 10],
         ]);
 
-        $this->createTransaction('INV-' . $yesterday->format('Ymd') . '-005', 2, 'VOID', 'CASH', $yesterday->setTime(16, 30), [
+        $this->createTransaction('INV-' . $yesterday->format('Ymd') . '-005', 2, 'VOID', 'CASH', $yesterday->copy()->setTime(16, 30), [
             ['product_id' => 3, 'quantity' => 2],
         ], 'Salah input');
 
         // Transaksi minggu lalu
         $lastWeek = Carbon::now()->subDays(7);
-        $this->createTransaction('INV-' . $lastWeek->format('Ymd') . '-001', 2, 'COMPLETED', 'CASH', $lastWeek->setTime(10, 0), [
+        $this->createTransaction('INV-' . $lastWeek->format('Ymd') . '-001', 2, 'COMPLETED', 'CASH', $lastWeek->copy()->setTime(10, 0), [
             ['product_id' => 2, 'quantity' => 2],
             ['product_id' => 8, 'quantity' => 3],
             ['product_id' => 13, 'quantity' => 2],
         ]);
 
-        $this->createTransaction('INV-' . $lastWeek->format('Ymd') . '-002', 3, 'COMPLETED', 'QRIS', $lastWeek->setTime(14, 30), [
+        $this->createTransaction('INV-' . $lastWeek->format('Ymd') . '-002', 3, 'COMPLETED', 'NON_CASH', $lastWeek->copy()->setTime(14, 30), [
             ['product_id' => 4, 'quantity' => 1],
             ['product_id' => 9, 'quantity' => 2],
         ]);
 
-        $this->createTransaction('INV-' . $lastWeek->format('Ymd') . '-003', 2, 'COMPLETED', 'CASH', $lastWeek->setTime(17, 0), [
+        $this->createTransaction('INV-' . $lastWeek->format('Ymd') . '-003', 2, 'COMPLETED', 'CASH', $lastWeek->copy()->setTime(17, 0), [
             ['product_id' => 17, 'quantity' => 3],
             ['product_id' => 18, 'quantity' => 2],
         ]);
 
         // Transaksi bulan lalu
         $lastMonth = Carbon::now()->subMonth();
-        $this->createTransaction('INV-' . $lastMonth->format('Ymd') . '-001', 2, 'COMPLETED', 'CASH', $lastMonth->setTime(11, 0), [
+        $this->createTransaction('INV-' . $lastMonth->format('Ymd') . '-001', 2, 'COMPLETED', 'CASH', $lastMonth->copy()->setTime(11, 0), [
             ['product_id' => 1, 'quantity' => 5],
             ['product_id' => 7, 'quantity' => 5],
         ]);
 
-        $this->createTransaction('INV-' . $lastMonth->format('Ymd') . '-002', 3, 'COMPLETED', 'DEBIT', $lastMonth->setTime(15, 0), [
+        $this->createTransaction('INV-' . $lastMonth->format('Ymd') . '-002', 3, 'COMPLETED', 'NON_CASH', $lastMonth->copy()->setTime(15, 0), [
             ['product_id' => 22, 'quantity' => 2],
             ['product_id' => 23, 'quantity' => 1],
         ]);

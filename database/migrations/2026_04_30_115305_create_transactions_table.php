@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('total_price', 12, 2)->default(0);
             $table->decimal('total_paid', 12, 2)->default(0);
             $table->decimal('change', 12, 2)->default(0);
-            $table->string('payment_method'); // CASH, QRIS
+            $table->enum('payment_method', ['CASH', 'NON_CASH']);
             $table->enum('status', ['COMPLETED', 'VOID'])->default('COMPLETED');
             $table->text('notes')->nullable();
             $table->timestamps();
