@@ -234,9 +234,9 @@ php artisan serve --host=0.0.0.0 --port=8000
 
 | Role | Email | Password | Akses |
 |------|-------|----------|-------|
-| **Owner** | owner@kasirkita.com | password | Dashboard, Reports, Audit Trail |
-| **Inventory** | inventory@kasirkita.com | password | Products, Categories, Stock Management |
-| **Kasir** | kasir@kasirkita.com | password | POS, Transactions |
+| **Owner** | owner@kasirkita.com | Password | Dashboard, Reports, Audit Trail |
+| **Inventory** | inventory@kasirkita.com | Password | Products, Categories, Stock Management |
+| **Kasir** | kasir@kasirkita.com | Password | POS, Transactions |
 
 > ⚠️ **PENTING**: Ganti password default setelah login pertama kali!
 
@@ -311,19 +311,6 @@ php artisan serve --host=0.0.0.0 --port=8000
   - Log semua void transactions
   - Log stock adjustments
   - User activity tracking
-
----
-
-## 📸 Screenshot
-
-### Owner Dashboard
-![Owner Dashboard](docs/screenshots/owner-dashboard.png)
-
-### POS Interface
-![POS Interface](docs/screenshots/pos-interface.png)
-
-### Inventory Management
-![Inventory](docs/screenshots/inventory.png)
 
 ---
 
@@ -408,7 +395,7 @@ This project is open-sourced software licensed under the [MIT license](https://o
 
 Developed with ❤️ by **Toriq Habil Fadhila**
 
-- GitHub: [@yourusername](https://github.com/M4SToriqq)
+- GitHub: [@M4SToriqq](https://github.com/M4SToriqq)
 - Email: toriqqhabilfadhila21@gmail.com
 
 ---
