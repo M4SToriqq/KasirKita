@@ -4,7 +4,7 @@ import { ref } from 'vue';
 import { useForm, Link } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import InputError from '@/Components/InputError.vue';
-import { PlusIcon, TrashIcon, CubeIcon } from '@heroicons/vue/24/outline';
+import { PlusIcon, TrashIcon, CubeIcon, ExclamationTriangleIcon } from '@heroicons/vue/24/outline';
 
 const props = defineProps({ products: Object, categories: Array });
 
@@ -81,7 +81,7 @@ const inputClass = 'w-full rounded-xl border border-gray-200 bg-gray-50 px-3 py-
                         <td class="px-4 py-3"><span class="font-mono text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-md">{{ p.sku }}</span></td>
                         <td class="px-4 py-3 text-right">
                             <span :class="p.stock_quantity <= p.min_stock ? 'text-red-600 font-bold' : 'text-gray-700'">{{ p.stock_quantity }}</span>
-                            <span v-if="p.stock_quantity <= p.min_stock" class="ml-1 text-xs text-red-400">⚠</span>
+                            <ExclamationTriangleIcon v-if="p.stock_quantity <= p.min_stock" class="inline h-4 w-4 ml-1 text-red-400" />
                         </td>
                         <td class="px-4 py-3 text-right font-medium text-gray-800">{{ fmt(p.selling_price) }}</td>
                         <td class="px-4 py-3 text-center">

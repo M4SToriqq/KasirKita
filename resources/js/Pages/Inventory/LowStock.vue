@@ -9,7 +9,7 @@ const fmt = (val) => new Intl.NumberFormat('id-ID', { style: 'currency', currenc
 
 <template>
     <SidebarLayout>
-        <template #title>⚠️ Stok Menipis</template>
+        <template #title>Stok Menipis</template>
 
         <div class="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
             <div class="flex items-center gap-2.5 border-b border-gray-100 bg-red-50 px-5 py-3.5">
